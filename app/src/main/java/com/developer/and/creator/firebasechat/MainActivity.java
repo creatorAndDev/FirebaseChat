@@ -53,22 +53,23 @@ public class MainActivity extends AppCompatActivity {
                 EditText input = (EditText)findViewById(R.id.editText);
 
                 //считываем введеный текст с поля ввода и отправляем в базу данных firebase
-                FirebaseDatabase.getInstance().getReference().push().setValue(new Message(input.getText().toString(),
+                FirebaseDatabase.getInstance().getReference().push()
+                        .setValue(new Message(input.getText().toString(),
                         FirebaseAuth.getInstance().getCurrentUser().getEmail()));
 
                 //обнуляем поле ввода после клика
                 input.setText("");
-
-                //если пользователь не авторизован, то показываем ему окно авторизации сначала
-                if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-                    startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().build(),
-                            SIGN_IN_REQUEST_CODE);
-                } else {
-                    //если же пользователь авторизован то показываем ему чат
-                    displayChat();
-                }
             }
         });
+
+        //если пользователь не авторизован, то показываем ему окно авторизации сначала
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            startActivityForResult(AuthUI.getInstance()
+                    .createSignInIntentBuilder().build(), SIGN_IN_REQUEST_CODE);
+        } else {
+            //если же пользователь авторизован то показываем ему чат
+            displayChat();
+        }
     }
 
     //создаем метод для показа авторизации
@@ -129,7 +130,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_signout) {
-            AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
+            AuthUI.getInstance().signOut(this)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     //в случае успеха отображаем уведомление
