@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //создаем метод для показа авторизации
+    //создаем метод для показа сообщения
     private void displayChat() {
         //создаем список сообщений
         ListView listMessages = (ListView)findViewById(R.id.listView);
